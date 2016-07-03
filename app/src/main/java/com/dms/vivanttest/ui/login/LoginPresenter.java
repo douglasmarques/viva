@@ -6,7 +6,7 @@ import android.support.annotation.StringRes;
 
 import com.dms.vivanttest.R;
 import com.dms.vivanttest.data.repository.UserRepository;
-import com.dms.vivanttest.ui.core.User;
+import com.dms.vivanttest.core.User;
 import com.dms.vivanttest.util.Validator;
 
 import static com.dms.vivanttest.ui.login.LoginPresenter.ValidationLogin.UNKNOWN_ERROR;

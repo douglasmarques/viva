@@ -3,7 +3,7 @@ package com.dms.vivanttest.data.repository;
 
 import android.content.Context;
 
-import com.dms.vivanttest.ui.core.User;
+import com.dms.vivanttest.core.User;
 import com.dms.vivanttest.util.Preferences;
 import com.dms.vivanttest.util.StringUtils;
 

@@ -5,6 +5,6 @@
     android:id="@+id/activity_intro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dms.vivanttest.ui.IntroActivity">
+    tools:context="com.dms.vivanttest.ui.intro.IntroActivity">
 
 </android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.dms.vivanttest.ui;
+package com.dms.vivanttest.ui.intro;
 
 import android.content.Intent;
 import android.graphics.Color;

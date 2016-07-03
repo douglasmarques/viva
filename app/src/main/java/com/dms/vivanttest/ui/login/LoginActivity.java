@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.dms.vivanttest.R;
 import com.dms.vivanttest.data.repository.UserRepositories;
 import com.dms.vivanttest.data.repository.UserRepository;
-import com.dms.vivanttest.ui.MainActivity;
+import com.dms.vivanttest.ui.photos.PhotosActivity;
 import com.dms.vivanttest.ui.base.BaseActivity;
 
 import butterknife.Bind;
@@ -122,7 +122,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void showMainScreen() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, PhotosActivity.class));
         finish();
     }
 }

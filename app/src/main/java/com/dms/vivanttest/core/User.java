@@ -1,4 +1,4 @@
-package com.dms.vivanttest.ui.core;
+package com.dms.vivanttest.core;
 
 public class User {
 

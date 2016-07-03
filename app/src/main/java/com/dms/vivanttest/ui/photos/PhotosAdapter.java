@@ -44,9 +44,11 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         PhotoPost photo = photos.get(position);
 
-        Uri uri = Uri.parse("https://files.vivant.com.au/tech_exam/photos/four.jpg");
+        Uri uri = Uri.parse("https://files.vivant.com.au/tech_exam/photos/" + photo.getPhotoFileName());
 
-        Picasso.with(context).load(uri).into(viewHolder.photo);
+        Picasso.with(context)
+                .load(uri)
+                .into(viewHolder.photo);
 
     }
 

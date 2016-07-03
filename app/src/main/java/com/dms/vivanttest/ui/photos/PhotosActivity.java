@@ -23,9 +23,9 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
     @Bind(R.id.progress)
     ProgressBar progress;
 
-    PhotosPresenter presenter;
-    PhotosAdapter adapter;
-    OnPhotoClickListener itemListener;
+    private PhotosPresenter presenter;
+    private PhotosAdapter adapter;
+    private OnPhotoClickListener itemListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dms.vivanttest.R;
+import com.dms.vivanttest.data.repository.UserRepositories;
+import com.dms.vivanttest.data.repository.UserRepository;
 import com.dms.vivanttest.ui.MainActivity;
 import com.dms.vivanttest.ui.base.BaseActivity;
 
@@ -42,7 +44,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     private LoginContract.UserActionsListener actionsListener;
 
-    //private UserRepository repository;
+    private UserRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +56,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     private void dependencyInjection() {
-        //repository = UserRepositories.getInMemoryRepoInstance();
-        //actionsListener = new LoginPresenter(this, repository);
+        repository = UserRepositories.getInMemoryRepoInstance(this);
+        actionsListener = new LoginPresenter(this, repository);
     }
 
     private void prepareView() {
         //FIXME: just for test
-        userNameEdt.setText("doug.marques@gmail.com");
-        passwordEdt.setText("teste1234");
+        userNameEdt.setText(UserRepository.TEST_USER);
+        passwordEdt.setText(UserRepository.TEST_PASSWORD);
         //
 
         passwordEdt = (EditText) findViewById(R.id.password);
@@ -85,6 +87,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @OnClick(R.id.signIn)
     public void doLogin() {
+        userTil.setError(null);
+        passwordTil.setError(null);
+
         actionsListener.login(
                 userNameEdt.getText().toString(),
                 passwordEdt.getText().toString());
@@ -96,18 +101,19 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
-    public void showLoginError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showInvalidFieldErrors(LoginPresenter.ValidationLogin validation) {
+    public void showLoginErrors(LoginPresenter.ValidationLogin validation) {
         switch (validation) {
             case USER_INVALID:
                 userTil.setError(getString(validation.mErrorMessage));
                 break;
             case PASS_INVALID:
                 passwordTil.setError(getString(validation.mErrorMessage));
+                break;
+            case WRONG_CREDENTIALS:
+                Toast.makeText(this, validation.mErrorMessage, Toast.LENGTH_LONG).show();
+                break;
+            case UNKNOWN_ERROR:
+                Toast.makeText(this, validation.mErrorMessage, Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;

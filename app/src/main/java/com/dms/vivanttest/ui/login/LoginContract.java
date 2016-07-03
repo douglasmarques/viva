@@ -7,9 +7,7 @@ public interface LoginContract {
 
     interface View {
 
-        void showLoginError(String error);
-
-        void showInvalidFieldErrors(LoginPresenter.ValidationLogin validation);
+        void showLoginErrors(LoginPresenter.ValidationLogin validation);
 
         void showMainScreen();
 

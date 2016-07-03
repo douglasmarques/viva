@@ -1,9 +1,16 @@
 package com.dms.vivanttest.ui.login;
 
 
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import com.dms.vivanttest.R;
+import com.dms.vivanttest.data.repository.UserRepository;
+import com.dms.vivanttest.ui.core.User;
+import com.dms.vivanttest.util.Validator;
+
+import static com.dms.vivanttest.ui.login.LoginPresenter.ValidationLogin.UNKNOWN_ERROR;
+import static com.dms.vivanttest.ui.login.LoginPresenter.ValidationLogin.WRONG_CREDENTIALS;
 
 
 /**
@@ -12,55 +19,62 @@ import com.dms.vivanttest.R;
  */
 public class LoginPresenter implements LoginContract.UserActionsListener {
 
-    public enum ValidationLogin {
+    enum ValidationLogin {
 
         USER_INVALID(R.string.error_invalid_email),
-        PASS_INVALID(R.string.error_invalid_password);
+        PASS_INVALID(R.string.error_invalid_password),
+        UNKNOWN_ERROR(R.string.error_unknown_error),
+        WRONG_CREDENTIALS(R.string.error_wrong_credentials);
 
         public final int mErrorMessage;
 
-        ValidationLogin(@StringRes int errorMessage){
+        ValidationLogin(@StringRes int errorMessage) {
             mErrorMessage = errorMessage;
         }
     }
 
-//    @NonNull
-//    private final LoginContract.View mLoginView;
+    @NonNull
+    private final LoginContract.View mLoginView;
 
-//    @NonNull
-//    private final UserRepository mRepository;
-//
-//    public LoginPresenter(@NonNull LoginContract.View loginView,
-//                          @NonNull UserRepository repository){
-//        mLoginView = loginView;
-//        mRepository = repository;
-//    }
+    @NonNull
+    private final UserRepository mRepository;
+
+    LoginPresenter(@NonNull LoginContract.View loginView,
+                   @NonNull UserRepository repository) {
+        mLoginView = loginView;
+        mRepository = repository;
+    }
 
 
     @Override
     public void login(String email, String pass) {
 
-        //mLoginView.showProgress(true);
+        mLoginView.showProgress(true);
 
-//        if(email.isEmpty() || !Validator.isValidEmail(email)){
-//            mLoginView.showInvalidFieldErrors(ValidationLogin.USER_INVALID);
-//        }else if(pass.isEmpty() || pass.length() < 4) {
-//            mLoginView.showInvalidFieldErrors(ValidationLogin.PASS_INVALID);
-//        }else{
-//            mLoginView.showProgress(true);
-//            mRepository.login(email, pass, new UserRepository.LoginCallback() {
-//                @Override
-//                public void onLoginSuccess(User user) {
-//                    mLoginView.showMainScreen();
-//                }
-//
-//                @Override
-//                public void onLoginFail(String error) {
-//                    mLoginView.showProgress(false);
-//                    mLoginView.showLoginError(error);
-//                }
-//            });
-//        }
+        if (email.isEmpty() || !Validator.isValidEmail(email)) {
+            mLoginView.showProgress(false);
+            mLoginView.showLoginErrors(ValidationLogin.USER_INVALID);
+        } else if (pass.isEmpty() || pass.length() < 4) {
+            mLoginView.showProgress(false);
+            mLoginView.showLoginErrors(ValidationLogin.PASS_INVALID);
+        } else {
+            mRepository.login(email, pass, new UserRepository.LoginCallback() {
+                @Override
+                public void onLoginSuccess(User user) {
+                    mLoginView.showMainScreen();
+                }
+
+                @Override
+                public void onLoginFail(int error) {
+                    mLoginView.showProgress(false);
+                    if (error == UserRepository.ERROR_WRONG_PASS_OR_USER) {
+                        mLoginView.showLoginErrors(WRONG_CREDENTIALS);
+                    } else {
+                        mLoginView.showLoginErrors(UNKNOWN_ERROR);
+                    }
+                }
+            });
+        }
     }
 
 }

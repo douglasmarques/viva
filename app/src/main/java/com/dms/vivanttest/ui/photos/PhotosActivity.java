@@ -1,5 +1,6 @@
 package com.dms.vivanttest.ui.photos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
@@ -9,6 +10,7 @@ import com.dms.vivanttest.data.remote.RemoteService;
 import com.dms.vivanttest.data.repository.PhotoRepositories;
 import com.dms.vivanttest.data.repository.PhotoRepository;
 import com.dms.vivanttest.ui.base.BaseActivity;
+import com.dms.vivanttest.ui.photodetail.PhotoDetailActivity;
 import com.dms.vivanttest.ui.widget.VerticalGridRecyclerView;
 
 import java.util.List;
@@ -32,6 +34,7 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
         dependencyInjection();
+        setActionBarTitle(R.string.title_photo_posts);
         presenter.showPhotos();
     }
 
@@ -39,7 +42,9 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
         itemListener = new OnPhotoClickListener() {
             @Override
             public void onPhotoClick(PhotoPost photo) {
-
+                Intent intent = new Intent(PhotosActivity.this, PhotoDetailActivity.class);
+                intent.putExtra(PhotoDetailActivity.PHOTO_PARAM, photo);
+                startActivity(intent);
             }
         };
         PhotoRepository repository = PhotoRepositories.

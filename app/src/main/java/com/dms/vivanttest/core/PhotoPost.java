@@ -2,7 +2,9 @@ package com.dms.vivanttest.core;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PhotoPost {
+import java.io.Serializable;
+
+public class PhotoPost implements Serializable {
 
     @SerializedName("photo_file_name")
     private String photoFileName;

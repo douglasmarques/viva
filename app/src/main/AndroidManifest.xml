@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".ui.photos.PhotosActivity"></activity>
 
+        <activity android:name=".ui.photodetail.PhotoDetailActivity"></activity>
+
         <activity android:name=".ui.login.LoginActivity"></activity>
 
         <activity android:name=".ui.intro.IntroActivity"></activity>

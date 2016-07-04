@@ -1,11 +1,13 @@
 package com.dms.vivanttest.ui.photodetail;
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dms.vivanttest.R;
@@ -13,6 +15,7 @@ import com.dms.vivanttest.core.PhotoPost;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PhotoDetailFragment extends Fragment implements PhotoDetailContract.View {
 
@@ -27,9 +30,11 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
     @Bind(R.id.captionText)
     TextView captionText;
 
-    private PhotoDetailPresenter presenter;
+    @Bind(R.id.favourite)
+    ImageView favourite;
 
-    private View viewRoot;
+    private boolean isFavourite = false;
+    private PhotoDetailPresenter presenter;
 
     public static PhotoDetailFragment newInstance(PhotoPost photo) {
         PhotoDetailFragment fragment = new PhotoDetailFragment();
@@ -44,7 +49,6 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         setRetainInstance(true);
         dependencyInjection();
         presenter.showPhotoDetail((PhotoPost) getArguments().getSerializable(PHOTO_PARAM));
@@ -54,7 +58,7 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        viewRoot = inflater.inflate(R.layout.fragment_photo_detail, container, false);
+        View viewRoot = inflater.inflate(R.layout.fragment_photo_detail, container, false);
         ButterKnife.bind(this, viewRoot);
 
         return viewRoot;
@@ -62,9 +66,16 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
 
     @Override
     public void showPhotoDetail(PhotoPost photo) {
-        photographer.setText(getString(R.string.by_photographer, photo.getPhotographer()) );
+        photographer.setText(getString(R.string.by_photographer, photo.getPhotographer()));
         likes.setText(String.valueOf(photo.getNumberOfLikes()));
         captionText.setText(photo.getCaption());
+    }
+
+    @OnClick(R.id.favourite)
+    public void clickFavourite() {
+        favourite.setEnabled(false);
+        favourite.setClickable(false);
+        favourite.animate().scaleXBy(0.4f).scaleYBy(0.4f).setDuration(100).setListener(scaleUpListener);
     }
 
     @Override
@@ -77,7 +88,59 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
 
     }
 
-    private void dependencyInjection(){
+    private void dependencyInjection() {
         presenter = new PhotoDetailPresenter(this);
     }
+
+    private Animator.AnimatorListener scaleUpListener = new Animator.AnimatorListener() {
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            favourite.animate().scaleXBy(-0.4f).scaleYBy(-0.4f).setDuration(100).setListener(scaleDownListener);
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+
+        }
+    };
+
+    private Animator.AnimatorListener scaleDownListener = new Animator.AnimatorListener() {
+
+        @Override
+        public void onAnimationStart(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            if(isFavourite){
+                favourite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                isFavourite = false;
+            }else{
+                favourite.setImageResource(R.drawable.ic_favorite_black_24dp);
+                isFavourite = true;
+            }
+            favourite.setEnabled(true);
+            favourite.setClickable(true);
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+
+        }
+    };
 }

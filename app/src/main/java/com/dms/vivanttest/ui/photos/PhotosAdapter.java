@@ -1,7 +1,11 @@
 package com.dms.vivanttest.ui.photos;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.support.annotation.UiThread;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +16,17 @@ import android.widget.TextView;
 import com.dms.vivanttest.R;
 import com.dms.vivanttest.core.PhotoPost;
 import com.dms.vivanttest.data.remote.RemoteService;
+import com.dms.vivanttest.util.CapturePhotoUtils;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
 
@@ -46,11 +54,12 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         PhotoPost photo = photos.get(position);
 
-        Uri uri = Uri.parse(RemoteService.PHOTO_ENDPOINT + photo.getPhotoFileName());
+
 
         viewHolder.photographer.setText(context.getString(R.string.by_photographer,photo.getPhotographer()));
         viewHolder.caption.setText(photo.getCaption());
 
+        Uri uri = Uri.parse(RemoteService.PHOTO_ENDPOINT + photo.getPhotoFileName());
         Picasso.with(context)
                 .load(uri)
                 .placeholder(R.drawable.photo_placeholder)
@@ -100,6 +109,37 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
             int position = getAdapterPosition();
             PhotoPost photo = getItem(position);
             photoClickListener.onPhotoClick(photo);
+        }
+
+        @OnLongClick(R.id.photo_detail)
+        boolean onLongClick(View v) {
+            int position = getAdapterPosition();
+            final PhotoPost photo = getItem(position);
+
+            AsyncTask<PhotoPost, Void, Bitmap> task = new AsyncTask<PhotoPost, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(PhotoPost... params) {
+                    PhotoPost photo = params[0];
+                    Uri uri = Uri.parse(RemoteService.PHOTO_ENDPOINT + photo.getPhotoFileName());
+                    try {
+                        return Picasso.with(context).load(uri).get();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap image) {
+                    super.onPostExecute(image);
+                    CapturePhotoUtils.insertImage(context.getContentResolver(), image, photo.getPhotoFileName(), photo.getCaption());
+                }
+            };
+
+            task.execute(photo);
+
+            return true;
         }
     }
 }

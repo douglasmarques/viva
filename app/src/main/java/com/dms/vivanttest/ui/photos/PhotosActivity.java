@@ -67,11 +67,11 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
         return super.onOptionsItemSelected(item);
     }
 
-    private void dependencyInjection(){
+    private void dependencyInjection() {
         itemListener = new OnPhotoClickListener() {
             @Override
             public void onPhotoClick(PhotoPost photo) {
-
+                presenter.clickPhotoDetails(photo);
             }
         };
         PhotoRepository repository = PhotoRepositories.
@@ -89,7 +89,7 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
 
     @Override
     public void showPhotos(List<PhotoPost> photosResult) {
-        if(photosResult != null && !photosResult.isEmpty()) {
+        if (photosResult != null && !photosResult.isEmpty()) {
             empty.setVisibility(View.GONE);
             if (adapter == null) {
                 adapter = new PhotosAdapter(this, photosResult, itemListener);
@@ -97,7 +97,7 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
             } else {
                 adapter.replaceData(photosResult);
             }
-        }else{
+        } else {
             empty.setVisibility(View.VISIBLE);
         }
     }
@@ -109,12 +109,14 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
 
     @Override
     public void showLogoutAlert() {
-        Alert.showConfirm(this, "Deseja sair", "Sim", "Não", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                presenter.confirmLogout(PhotosActivity.this);
-            }
-        });
+        Alert.showConfirm(this, getString(R.string.ask_logoff),
+                getString(R.string.yes),
+                getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.confirmLogout(PhotosActivity.this);
+                    }
+                });
     }
 
     @Override

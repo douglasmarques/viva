@@ -23,12 +23,16 @@
     <!-- Photo Posts -->
     <string name="title_photo_posts">Photo Posts</string>
     <string name="photo_post_no_photos">No photos to show.</string>
+    <string name="ask_logoff">Are you sure you want to logoff?</string>
 
     <!-- Photo Details -->
     <string name="details">Details</string>
     <string name="caption">Caption</string>
     <string name="by_photographer">by %s</string>
+    <string name="favourite">favourite</string>
 
     <!-- common -->
     <string name="error_unknown_error">An error occurred please try again.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

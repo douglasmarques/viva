@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,8 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/details"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -16,7 +17,19 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textSize="22sp" />
 
+    <ImageView
+        android:id="@+id/favourite"
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/favourite"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
+        android:tint="@color/colorPrimaryDark"
+        android:src="@drawable/ic_favorite_border_black_24dp"/>
+
     <android.support.v7.widget.CardView
+        android:layout_below="@+id/details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="4dp"
@@ -70,4 +83,4 @@
     </android.support.v7.widget.CardView>
 
 
-</LinearLayout>
+</RelativeLayout>

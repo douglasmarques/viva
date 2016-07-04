@@ -1,9 +1,11 @@
 package com.dms.vivanttest.ui.photos;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.dms.vivanttest.core.PhotoPost;
 import com.dms.vivanttest.data.repository.PhotoRepository;
+import com.dms.vivanttest.data.repository.UserRepositories;
 import com.dms.vivanttest.data.repository.UserRepository;
 
 import java.util.List;
@@ -46,7 +48,18 @@ public class PhotosPresenter implements PhotosContract.UserActionsListener {
     }
 
     @Override
-    public void showDetail(String photo) {
+    public void clickPhotoDetails(PhotoPost photo) {
+        view.showPhotoDetails(photo);
+    }
 
+    @Override
+    public void clickLogout() {
+        view.showLogoutAlert();
+    }
+
+    @Override
+    public void confirmLogout(Context context) {
+        UserRepositories.getInMemoryRepoInstance(context).logout();
+        view.showLoginScreen();
     }
 }

@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 
 public class VerticalGridRecyclerView extends RecyclerView {
 
-    private StaggeredGridLayoutManager manager;
+    private GridLayoutManager manager;
     private int columnWidth = -1;
 
     public VerticalGridRecyclerView(Context context) {
@@ -39,7 +39,7 @@ public class VerticalGridRecyclerView extends RecyclerView {
             array.recycle();
         }
 
-        manager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        manager = new GridLayoutManager(getContext(), 1);
         setLayoutManager(manager);
     }
 

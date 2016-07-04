@@ -1,5 +1,7 @@
 package com.dms.vivanttest.ui.photos;
 
+import android.content.Context;
+
 import com.dms.vivanttest.core.PhotoPost;
 
 import java.util.List;
@@ -16,13 +18,23 @@ public interface PhotosContract {
         void showPhotos(List<PhotoPost> photos);
 
         void showProgress(final boolean show);
+
+        void showLogoutAlert();
+
+        void showLoginScreen();
+
+        void showPhotoDetails(PhotoPost photo);
     }
 
     interface UserActionsListener{
 
         void showPhotos();
 
-        void showDetail(String photo);
+        void clickPhotoDetails(PhotoPost photo);
+
+        void clickLogout();
+
+        void confirmLogout(Context context);
 
     }
 }

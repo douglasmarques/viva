@@ -15,17 +15,20 @@
     <string name="error_invalid_email">Invalid Email</string>
     <string name="error_invalid_password">Invalid Password</string>
     <string name="error_wrong_credentials">Wrong Credentials, please try again</string>
-    <string name="error_unknown_error">Unknown error, please try again</string>
     <string name="email">email</string>
     <string name="password">Password</string>
     <string name="action_sign_in">Sign-in</string>
 
 
-    <!-- Photo Post -->
+    <!-- Photo Posts -->
     <string name="title_photo_posts">Photo Posts</string>
+    <string name="photo_post_no_photos">No photos to show.</string>
 
     <!-- Photo Details -->
     <string name="details">Details</string>
     <string name="caption">Caption</string>
     <string name="by_photographer">by %s</string>
+
+    <!-- common -->
+    <string name="error_unknown_error">An error occurred please try again.</string>
 </resources>

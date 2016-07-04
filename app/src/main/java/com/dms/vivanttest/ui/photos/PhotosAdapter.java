@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dms.vivanttest.R;
 import com.dms.vivanttest.core.PhotoPost;
+import com.dms.vivanttest.data.remote.RemoteService;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -44,10 +46,14 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         PhotoPost photo = photos.get(position);
 
-        Uri uri = Uri.parse("https://files.vivant.com.au/tech_exam/photos/" + photo.getPhotoFileName());
+        Uri uri = Uri.parse(RemoteService.PHOTO_ENDPOINT + photo.getPhotoFileName());
+
+        viewHolder.photographer.setText(context.getString(R.string.by_photographer,photo.getPhotographer()));
+        viewHolder.caption.setText(photo.getCaption());
 
         Picasso.with(context)
                 .load(uri)
+                .placeholder(R.drawable.photo_placeholder)
                 .into(viewHolder.photo);
 
     }
@@ -74,6 +80,12 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
         @Bind(R.id.photo)
         public ImageView photo;
+
+        @Bind(R.id.photographer)
+        public TextView photographer;
+
+        @Bind(R.id.caption)
+        public TextView caption;
 
         private PhotosActivity.OnPhotoClickListener photoClickListener;
 

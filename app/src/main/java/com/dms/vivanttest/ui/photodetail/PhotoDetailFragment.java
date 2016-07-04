@@ -62,7 +62,7 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
 
     @Override
     public void showPhotoDetail(PhotoPost photo) {
-        photographer.setText(photo.getPhotographer());
+        photographer.setText(getString(R.string.by_photographer, photo.getPhotographer()) );
         likes.setText(String.valueOf(photo.getNumberOfLikes()));
         captionText.setText(photo.getCaption());
     }

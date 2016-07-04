@@ -6,9 +6,9 @@
     <string name="intro_photo_list">Photo List</string>
     <string name="intro_photo_list_desc">Check this awesome photo list</string>
     <string name="intro_photo_details">Photo Details</string>
-    <string name="intro_photo_details_desc">Select a photo and see all its details.</string>
+    <string name="intro_photo_details_desc">Select a photo and see all details.</string>
     <string name="intro_favourite_photo">Favourite Photo</string>
-    <string name="intro_favourite_photo_desc">Easily favourite your photos</string>
+    <string name="intro_favourite_photo_desc">Favourite your photos</string>
 
     <!-- Login Screen -->
     <string name="title_activity_login">Login</string>

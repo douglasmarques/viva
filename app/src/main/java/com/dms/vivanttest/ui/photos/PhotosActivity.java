@@ -2,6 +2,8 @@ package com.dms.vivanttest.ui.photos;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 
 import com.dms.vivanttest.R;
@@ -9,7 +11,9 @@ import com.dms.vivanttest.core.PhotoPost;
 import com.dms.vivanttest.data.remote.RemoteService;
 import com.dms.vivanttest.data.repository.PhotoRepositories;
 import com.dms.vivanttest.data.repository.PhotoRepository;
+import com.dms.vivanttest.data.repository.UserRepositories;
 import com.dms.vivanttest.ui.base.BaseActivity;
+import com.dms.vivanttest.ui.login.LoginActivity;
 import com.dms.vivanttest.ui.photodetail.PhotoDetailActivity;
 import com.dms.vivanttest.ui.widget.VerticalGridRecyclerView;
 
@@ -36,6 +40,24 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
         dependencyInjection();
         setActionBarTitle(R.string.title_photo_posts);
         presenter.showPhotos();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_photos, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                UserRepositories.getInMemoryRepoInstance(this).logout();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void dependencyInjection(){

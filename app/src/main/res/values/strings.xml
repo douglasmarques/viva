@@ -4,11 +4,11 @@
 
     <!-- Intro Screen -->
     <string name="intro_photo_list">Photo List</string>
-    <string name="intro_photo_list_desc">Check this awesome photo list</string>
+    <string name="intro_photo_list_desc">Check this awesome photo list especially chosen for you.</string>
     <string name="intro_photo_details">Photo Details</string>
-    <string name="intro_photo_details_desc">Select a photo and see all details.</string>
+    <string name="intro_photo_details_desc">Select a photo and see all details (photographer, caption and likes).</string>
     <string name="intro_favourite_photo">Favourite Photo</string>
-    <string name="intro_favourite_photo_desc">Favourite your photos</string>
+    <string name="intro_favourite_photo_desc">Tag your favourite photos just by clicking on the heart</string>
 
     <!-- Login Screen -->
     <string name="title_activity_login">Login</string>

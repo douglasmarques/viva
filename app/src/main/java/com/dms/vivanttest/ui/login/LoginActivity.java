@@ -3,6 +3,7 @@ package com.dms.vivanttest.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.IntentCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -122,7 +123,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void showMainScreen() {
-        startActivity(new Intent(this, PhotosActivity.class));
+        Intent intent = new Intent(this, PhotosActivity.class);
+        startActivity(IntentCompat.makeRestartActivityTask(intent.getComponent()));
         finish();
     }
 }

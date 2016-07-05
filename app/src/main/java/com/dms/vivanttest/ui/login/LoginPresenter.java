@@ -5,9 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import com.dms.vivanttest.R;
-import com.dms.vivanttest.data.repository.UserRepository;
 import com.dms.vivanttest.core.User;
-import com.dms.vivanttest.util.Validator;
+import com.dms.vivanttest.data.repository.UserRepository;
 
 import static com.dms.vivanttest.ui.login.LoginPresenter.ValidationLogin.UNKNOWN_ERROR;
 import static com.dms.vivanttest.ui.login.LoginPresenter.ValidationLogin.WRONG_CREDENTIALS;
@@ -51,7 +50,8 @@ public class LoginPresenter implements LoginContract.UserActionsListener {
 
         mLoginView.showProgress(true);
 
-        if (email.isEmpty() || !Validator.isValidEmail(email)) {
+        //if (email.isEmpty() || !Validator.isValidEmail(email)) {
+        if (email.isEmpty() || !email.contains("@")) {
             mLoginView.showProgress(false);
             mLoginView.showLoginErrors(ValidationLogin.USER_INVALID);
         } else if (pass.isEmpty() || pass.length() < 4) {

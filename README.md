@@ -14,9 +14,9 @@ The app was developed following the MVP pattern, separating the internal data mo
 
 ## Screens
 
-The screens were developing using material design paterns and following the test specifications
+The screens were developed using material design patterns and following the Test specification document.
 
-**Intro:** 3 steps showing the most important features, it is possible to skip and go to login screen
+**Intro:** 3 steps showing the most important features, it is possible to skip and go to login screen.
 
 **Login:** User and password to sign-in the app. There isn't a remote login service to authenticate the user, you need to use the following user:
 

@@ -63,8 +63,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     private void prepareView() {
         //FIXME: just for test
-        userNameEdt.setText(UserRepository.TEST_USER);
-        passwordEdt.setText(UserRepository.TEST_PASSWORD);
+        //userNameEdt.setText(UserRepository.TEST_USER);
+        //passwordEdt.setText(UserRepository.TEST_PASSWORD);
         //
 
         passwordEdt = (EditText) findViewById(R.id.password);

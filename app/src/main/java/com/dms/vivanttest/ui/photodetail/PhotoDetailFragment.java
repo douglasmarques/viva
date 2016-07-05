@@ -73,20 +73,17 @@ public class PhotoDetailFragment extends Fragment implements PhotoDetailContract
 
     @OnClick(R.id.favourite)
     public void clickFavourite() {
+        presenter.favouritePhoto();
+
+    }
+
+    @Override
+    public void favouritePhoto() {
         favourite.setEnabled(false);
         favourite.setClickable(false);
         favourite.animate().scaleXBy(0.4f).scaleYBy(0.4f).setDuration(100).setListener(scaleUpListener);
     }
 
-    @Override
-    public void favouritePhoto() {
-
-    }
-
-    @Override
-    public void unFavouritePhoto() {
-
-    }
 
     private void dependencyInjection() {
         presenter = new PhotoDetailPresenter(this);

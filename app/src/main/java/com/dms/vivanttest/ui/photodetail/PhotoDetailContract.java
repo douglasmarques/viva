@@ -15,14 +15,13 @@ public interface PhotoDetailContract {
 
         void favouritePhoto();
 
-        void unFavouritePhoto();
     }
 
     interface UserActionsListener{
 
         void showPhotoDetail(PhotoPost photo);
 
-        void favouritePhoto(boolean favourite);
+        void favouritePhoto();
 
     }
 }

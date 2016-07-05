@@ -28,7 +28,7 @@ public class PhotoDetailPresenter implements PhotoDetailContract.UserActionsList
     }
 
     @Override
-    public void favouritePhoto(boolean favourite) {
-
+    public void favouritePhoto() {
+        view.favouritePhoto();
     }
 }

@@ -18,7 +18,7 @@ The screens were developing using material design paterns and following the test
 
 **Intro:** 3 steps showing the most important features, it is possible to skip and go to login screen
 
-**Login:** User and password to sign-in the app. There isn't a remote login service to authenticate the usen, you need to user the following user:
+**Login:** User and password to sign-in the app. There isn't a remote login service to authenticate the user, you need to use the following user:
 
 - user: test@test.com
 - pass: test1234

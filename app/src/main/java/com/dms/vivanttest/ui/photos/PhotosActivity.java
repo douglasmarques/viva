@@ -3,6 +3,7 @@ package com.dms.vivanttest.ui.photos;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +39,9 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
 
     private PhotosPresenter presenter;
     private PhotosAdapter adapter;
-    private OnPhotoClickListener itemListener;
+    private OnPhotoClickListener itemClickListener;
+    private OnPhotoLongClickListener itemLongClickListener;
+    private AlertDialog savingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +71,16 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
     }
 
     private void dependencyInjection() {
-        itemListener = new OnPhotoClickListener() {
+        itemClickListener = new OnPhotoClickListener() {
             @Override
             public void onPhotoClick(PhotoPost photo) {
                 presenter.clickPhotoDetails(photo);
+            }
+        };
+        itemLongClickListener = new OnPhotoLongClickListener() {
+            @Override
+            public void onPhotoLongClick(PhotoPost photo) {
+                presenter.longClickPhoto(photo);
             }
         };
         PhotoRepository repository = PhotoRepositories.
@@ -81,9 +90,6 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
 
     @Override
     public void showErrors() {
-        photos.setVisibility(View.GONE);
-        progress.setVisibility(View.GONE);
-        empty.setVisibility(View.VISIBLE);
         Toast.makeText(this, R.string.error_unknown_error, Toast.LENGTH_LONG).show();
     }
 
@@ -92,7 +98,7 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
         if (photosResult != null && !photosResult.isEmpty()) {
             empty.setVisibility(View.GONE);
             if (adapter == null) {
-                adapter = new PhotosAdapter(this, photosResult, itemListener);
+                adapter = new PhotosAdapter(this, photosResult, itemClickListener, itemLongClickListener);
                 photos.setAdapter(adapter);
             } else {
                 adapter.replaceData(photosResult);
@@ -100,6 +106,11 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
         } else {
             empty.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void showSuccessSavePhoto() {
+        Toast.makeText(this, R.string.success_save_photo, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -132,7 +143,23 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
         startActivity(intent);
     }
 
+    @Override
+    public void showSavePhotoAlert(final PhotoPost photo) {
+        Alert.showConfirm(this, getString(R.string.ask_save_photo),
+                getString(R.string.yes),
+                getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.confirmSavePhoto(PhotosActivity.this, photo);
+                    }
+                });
+    }
+
     public interface OnPhotoClickListener {
         void onPhotoClick(PhotoPost photo);
+    }
+
+    public interface OnPhotoLongClickListener {
+        void onPhotoLongClick(PhotoPost photo);
     }
 }

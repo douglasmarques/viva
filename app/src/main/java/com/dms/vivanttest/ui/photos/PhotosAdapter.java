@@ -33,13 +33,16 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     private Context context;
     private List<PhotoPost> photos;
     private PhotosActivity.OnPhotoClickListener photoClickListener;
+    private PhotosActivity.OnPhotoLongClickListener photoLongClickListener;
 
     public PhotosAdapter(Context context,
                          List<PhotoPost> photos,
-                         PhotosActivity.OnPhotoClickListener photoClickListener) {
+                         PhotosActivity.OnPhotoClickListener photoClickListener,
+                         PhotosActivity.OnPhotoLongClickListener photoLongClickListener) {
         setList(photos);
         this.context = context;
         this.photoClickListener = photoClickListener;
+        this.photoLongClickListener = photoLongClickListener;
     }
 
     @Override
@@ -115,30 +118,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         boolean onLongClick(View v) {
             int position = getAdapterPosition();
             final PhotoPost photo = getItem(position);
-
-            AsyncTask<PhotoPost, Void, Bitmap> task = new AsyncTask<PhotoPost, Void, Bitmap>() {
-                @Override
-                protected Bitmap doInBackground(PhotoPost... params) {
-                    PhotoPost photo = params[0];
-                    Uri uri = Uri.parse(RemoteService.PHOTO_ENDPOINT + photo.getPhotoFileName());
-                    try {
-                        return Picasso.with(context).load(uri).get();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Bitmap image) {
-                    super.onPostExecute(image);
-                    CapturePhotoUtils.insertImage(context.getContentResolver(), image, photo.getPhotoFileName(), photo.getCaption());
-                }
-            };
-
-            task.execute(photo);
-
+            photoLongClickListener.onPhotoLongClick(photo);
             return true;
         }
     }

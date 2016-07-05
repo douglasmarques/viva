@@ -17,6 +17,8 @@ public interface PhotosContract {
 
         void showPhotos(List<PhotoPost> photos);
 
+        void showSuccessSavePhoto();
+
         void showProgress(final boolean show);
 
         void showLogoutAlert();
@@ -24,17 +26,23 @@ public interface PhotosContract {
         void showLoginScreen();
 
         void showPhotoDetails(PhotoPost photo);
+
+        void showSavePhotoAlert(PhotoPost photo);
     }
 
-    interface UserActionsListener{
+    interface UserActionsListener {
 
         void showPhotos();
 
         void clickPhotoDetails(PhotoPost photo);
 
+        void longClickPhoto(PhotoPost photo);
+
         void clickLogout();
 
         void confirmLogout(Context context);
+
+        void confirmSavePhoto(Context context, PhotoPost photo);
 
     }
 }

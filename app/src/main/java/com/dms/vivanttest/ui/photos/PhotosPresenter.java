@@ -1,13 +1,19 @@
 package com.dms.vivanttest.ui.photos;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.dms.vivanttest.core.PhotoPost;
+import com.dms.vivanttest.data.remote.RemoteService;
 import com.dms.vivanttest.data.repository.PhotoRepository;
 import com.dms.vivanttest.data.repository.UserRepositories;
-import com.dms.vivanttest.data.repository.UserRepository;
+import com.dms.vivanttest.util.CapturePhotoUtils;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -53,6 +59,11 @@ public class PhotosPresenter implements PhotosContract.UserActionsListener {
     }
 
     @Override
+    public void longClickPhoto(PhotoPost photo) {
+        view.showSavePhotoAlert(photo);
+    }
+
+    @Override
     public void clickLogout() {
         view.showLogoutAlert();
     }
@@ -61,5 +72,34 @@ public class PhotosPresenter implements PhotosContract.UserActionsListener {
     public void confirmLogout(Context context) {
         UserRepositories.getInMemoryRepoInstance(context).logout();
         view.showLoginScreen();
+    }
+
+    @Override
+    public void confirmSavePhoto(final Context context, final PhotoPost photo) {
+        AsyncTask<PhotoPost, Void, Bitmap> task = new AsyncTask<PhotoPost, Void, Bitmap>() {
+            @Override
+            protected Bitmap doInBackground(PhotoPost... params) {
+                PhotoPost photo = params[0];
+                Uri uri = Uri.parse(RemoteService.PHOTO_ENDPOINT + photo.getPhotoFileName());
+                try {
+                    return Picasso.with(context).load(uri).get();
+                } catch (IOException e) {
+                    view.showErrors();
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap image) {
+                super.onPostExecute(image);
+                CapturePhotoUtils.insertImage(
+                        context.getContentResolver(),
+                        image,
+                        photo.getPhotoFileName(),
+                        photo.getCaption());
+                view.showSuccessSavePhoto();
+            }
+        };
+        task.execute(photo);
     }
 }

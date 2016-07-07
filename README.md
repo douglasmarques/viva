@@ -1,4 +1,4 @@
-# Vivant Test
+# Viva
 
 
 ## Description
@@ -23,7 +23,7 @@ The screens were developed using material design patterns and following the Test
 - user: test@test.com
 - pass: test1234
 
-**PhotoList:** Photos retrieved from Vivant photo service. Using longClick is possible to save photos to gallery and a normal click goes to photo details.
+**PhotoList:** Photos retrieved from photo service. Using longClick is possible to save photos to gallery and a normal click goes to photo details.
 
 **Photo Details:** Photo's name, photographer, likes and caption. Clicking on the heart is possible to un/favourite the photo.
 

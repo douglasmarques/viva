@@ -11,6 +11,7 @@ import com.dms.vivanttest.data.remote.RemoteService;
 import com.dms.vivanttest.data.repository.PhotoRepository;
 import com.dms.vivanttest.data.repository.UserRepositories;
 import com.dms.vivanttest.util.CapturePhotoUtils;
+import com.dms.vivanttest.util.EspressoIdlingResource;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -38,15 +39,18 @@ public class PhotosPresenter implements PhotosContract.UserActionsListener {
     @Override
     public void showPhotos() {
         view.showProgress(true);
+        EspressoIdlingResource.increment();
         repository.getPhotos(new PhotoRepository.GetPhotosCallback() {
             @Override
             public void onResultSuccess(List<PhotoPost> photos) {
+                EspressoIdlingResource.decrement();
                 view.showProgress(false);
                 view.showPhotos(photos);
             }
 
             @Override
             public void onResultFail(int error) {
+                EspressoIdlingResource.decrement();
                 view.showProgress(false);
                 view.showErrors();
             }

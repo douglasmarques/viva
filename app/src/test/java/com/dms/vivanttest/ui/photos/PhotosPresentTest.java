@@ -17,7 +17,6 @@ import static org.mockito.Mockito.verify;
 
 public class PhotosPresentTest {
 
-
     private static List<PhotoPost> PHOTOS = Lists.newArrayList(new PhotoPost(),
             new PhotoPost());
 

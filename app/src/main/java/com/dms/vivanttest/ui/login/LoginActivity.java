@@ -25,7 +25,7 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends BaseActivity implements LoginContract.View {
 
-    @Bind(R.id.user_name)
+    @Bind(R.id.userName)
     protected EditText userNameEdt;
 
     @Bind(R.id.password)

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Vivant Test</string>
+    <string name="app_name">Vivant</string>
     <string name="action_settings">Settings</string>
 
     <!-- Intro Screen -->
@@ -21,7 +21,7 @@
 
 
     <!-- Photo Posts -->
-    <string name="title_photo_posts">Photo Posts</string>
+    <string name="title_activity_photo_posts">Photo Posts</string>
     <string name="photo_post_no_photos">No photos to show.</string>
     <string name="ask_logoff">Are you sure you want to logoff?</string>
     <string name="ask_save_photo">Do you want to save this photo to your gallery?</string>

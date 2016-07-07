@@ -48,7 +48,7 @@ public class PhotosActivity extends BaseActivity implements PhotosContract.View 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
         dependencyInjection();
-        setActionBarTitle(R.string.title_photo_posts);
+        setActionBarTitle(R.string.title_activity_photo_posts);
         presenter.showPhotos();
     }
 
